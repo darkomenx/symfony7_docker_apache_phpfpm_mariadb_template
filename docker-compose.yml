@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+
+    apache:
+        build: ./docker/apache
+        container_name: my-project-name_apache
+        tty: true
+        ports:
+            - '444:443'
+            - '2036:22'
+        depends_on:
+            - php
+            - mariadb
+        volumes:
+            - ./:/var/www/my-project-name/
+#        networks:
+#            - default
+#            - shared
+
+    php:
+        build: ./docker/php
+        container_name: my-project-name_php
+        tty: true
+        expose:
+            -   9000
+        volumes:
+            - ./:/var/www/my-project-name/
+#        networks:
+#            - default
+#            - shared
+
+    mariadb:
+        build: ./docker/mariadb
+        container_name: my-project-name_mariadb
+        tty: true
+        #environment:
+            #MYSQL_ROOT_PASSWORD: docker
+            #MYSQL_DATABASE: my-project-name
+            #MYSQL_USER: root
+            #MYSQL_PASSWORD: docker
+        ports:
+            - '3311:3307'
+#        networks:
+#            - default
+#            - shared
+
+    maildev:
+        image: djfarrelly/maildev
+        ports:
+            - 1025:1025
+            - 1080:1080
+        command: ["bin/maildev", "--web", "1080", "--smtp", "1025"]
+
+#networks:
+#    shared:
+#        name: shared_api_network
+#        external: true

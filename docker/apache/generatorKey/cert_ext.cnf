@@ -1,0 +1,13 @@
+[req]
+default_bit = 4096
+distinguished_name = req_distinguished_name
+prompt = no
+
+[req_distinguished_name]
+countryName             = US
+stateOrProvinceName     = NewYork
+localityName            = NewYork
+organizationName        = my-project-name
+commonName              = my-project-name.test
+commonName              = my-project-name
+commonName              = my-project-name
